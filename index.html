@@ -1,0 +1,55 @@
+<html>
+	<head></head>
+	<body>
+		
+		<div id="add-form">
+			<input type="text" id="name" name="name" placeholder="Name"/> </br>
+			<input type="text" id="student_id" name="student_id" placeholder="Your ID"/> </br>
+			<input type="email" id="email" name="email" placeholder="Your Email"/> </br>
+			<input type="button" id="add" value="Add Data"/>
+			<input type="button" onclick="$('#add-form').slideUp();" id="cancel" value="Cancel"/>
+		
+		</div>
+		
+		<div id="edit-form"></div>
+		
+		<div id="data-show"></div>
+		
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+		<script type="text/javascript">
+		
+		$(document).ready(function(){
+			
+			$('#add').click(function(){
+				
+				var name = $('#name').val();
+				var student_id = $('#student_id').val();
+				var email = $('#email').val();
+				$.ajax({
+					url:"add.php",
+					type:"POST",
+					data: {name : name,student_id:student_id,email:email },
+					success: function(data){
+						
+						if(data == 'success'){
+						
+						var name = $('#name').val('');
+						var student_id = $('#student_id').val('');
+						var email = $('#email').val('');
+						$('#form-add').slideUp();
+							  $.get('view.php',function(data){
+								
+								$('#data-show').html(data);
+							})
+						}
+					}
+				})
+			})
+		
+		})
+		
+		</script>
+		
+	</body>
+</html>
